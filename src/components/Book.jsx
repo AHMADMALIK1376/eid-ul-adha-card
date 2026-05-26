@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import HTMLFlipBook from "react-pageflip";
 import hugIcon from '../assets/hug-icon.png';
 import sacrificeIcon from '../assets/sacrifice-icon.png';
@@ -10,6 +10,24 @@ import eidPrayerIcon from '../assets/eid-prayer.png';
 import eidiGiftIcon from '../assets/eidi-gift.png';
 
 function Book() {
+
+  const [bookSize, setBookSize] = useState({ width: 340, height: 480 });
+
+  useEffect(() => {
+    const updateSize = () => {
+      const w = window.innerWidth;
+      if (w < 400) {
+        setBookSize({ width: 270, height: 380 });
+      } else if (w < 768) {
+        setBookSize({ width: 310, height: 440 });
+      } else {
+        setBookSize({ width: 370, height: 520 });
+      }
+    };
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   const eidPages = [
     {
@@ -98,8 +116,8 @@ function Book() {
 
   return (
     <HTMLFlipBook 
-      width={340} 
-      height={480}
+      width={bookSize.width} 
+      height={bookSize.height}
       maxShadowOpacity={0.5}
       drawShadow={true}
       showCover={true}
@@ -133,17 +151,12 @@ function Book() {
           <h1 style={{ fontSize: '28px', fontWeight: '800', textAlign: 'center', marginBottom: '14px', color: '#FFD700', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", lineHeight: '1.3', letterSpacing: '3px', textShadow: '2px 2px 0px #16213E', position: 'relative', zIndex: 1 }}>EID UL-ADHA<br/>MUBARAK</h1>
           <svg width="200" height="8" style={{ margin: '8px 0', position: 'relative', zIndex: 1 }}><line x1="0" y1="4" x2="80" y2="4" stroke="#FFD700" strokeWidth="1.5"/><circle cx="100" cy="4" r="3" fill="#FFD700"/><line x1="120" y1="4" x2="200" y2="4" stroke="#FFD700" strokeWidth="1.5"/></svg>
           
-          {/* Mosque Icon - with light background for visibility */}
           <img 
             src="/mosque-icon.png" 
             alt=""
             style={{ 
-              width: '65px', 
-              height: '65px', 
-              marginTop: '12px', 
-              position: 'relative', 
-              zIndex: 2,
-              objectFit: 'contain',
+              width: '65px', height: '65px', marginTop: '12px', 
+              position: 'relative', zIndex: 2, objectFit: 'contain',
               filter: 'drop-shadow(0 0 6px rgba(255,215,0,0.4)) brightness(1.3)'
             }} 
           />
