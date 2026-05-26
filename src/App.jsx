@@ -37,7 +37,7 @@ function App() {
           </svg>
         ))}
         
-        {/* Crescent Moon - lowered for mobile */}
+        {/* Crescent Moon */}
         <svg width={isMobile ? "40" : "55"} height={isMobile ? "40" : "55"} viewBox="0 0 80 80" style={{
           position: 'absolute', top: isMobile ? '10%' : '8%', right: isMobile ? '6%' : '8%', opacity: 0.9, zIndex: 3
         }}>
@@ -45,7 +45,7 @@ function App() {
           <circle cx="50" cy="34" r="28" fill="#0D1B2A"/>
         </svg>
 
-        {/* Lanterns - lowered for mobile */}
+        {/* Lanterns */}
         <div style={{ position: 'absolute', top: isMobile ? '12%' : '10%', left: '3%', fontSize: isMobile ? '18px' : '26px', filter: 'drop-shadow(0 0 4px rgba(255,180,50,0.7))', zIndex: 3 }}>🏮</div>
         <div style={{ position: 'absolute', top: isMobile ? '10%' : '8%', left: isMobile ? '22%' : '20%', fontSize: isMobile ? '22px' : '30px', filter: 'drop-shadow(0 0 4px rgba(255,180,50,0.7))', zIndex: 3 }}>🏮</div>
         {!isMobile && <div style={{ position: 'absolute', top: '10%', left: '40%', fontSize: '24px', filter: 'drop-shadow(0 0 4px rgba(255,180,50,0.7))', zIndex: 3 }}>🏮</div>}
@@ -60,41 +60,41 @@ function App() {
           </>
         )}
 
-        {/* ============ CHILD WITH SHEEP - LEFT (LARGER & MOVED UP) ============ */}
+        {/* ============ CHILD WITH SHEEP - LEFT (MOVED UP FOR MOBILE) ============ */}
         <img 
           src="/child-with-sheep.png" 
           alt=""
           style={{
-            position: 'absolute', bottom: isMobile ? '-2%' : '0', left: isMobile ? '1%' : '5%',
-            width: isMobile ? '32%' : '30%', maxWidth: isMobile ? '180px' : '360px',
-            height: 'auto', maxHeight: isMobile ? '50vh' : '65vh',
+            position: 'absolute', bottom: isMobile ? '5%' : '0', left: isMobile ? '1%' : '5%',
+            width: isMobile ? '30%' : '30%', maxWidth: isMobile ? '160px' : '360px',
+            height: 'auto', maxHeight: isMobile ? '45vh' : '65vh',
             objectFit: 'contain', objectPosition: 'left bottom',
             opacity: 0.95, zIndex: 2
           }}
         />
 
-        {/* ============ CHILD WITH COW - RIGHT (LARGER & MOVED UP) ============ */}
+        {/* ============ CHILD WITH COW - RIGHT (MOVED UP FOR MOBILE) ============ */}
         <img 
           src="/child-with-cow.png" 
           alt=""
           style={{
-            position: 'absolute', bottom: isMobile ? '-2%' : '0', right: isMobile ? '1%' : '5%',
-            width: isMobile ? '32%' : '30%', maxWidth: isMobile ? '180px' : '360px',
-            height: 'auto', maxHeight: isMobile ? '50vh' : '65vh',
+            position: 'absolute', bottom: isMobile ? '5%' : '0', right: isMobile ? '1%' : '5%',
+            width: isMobile ? '30%' : '30%', maxWidth: isMobile ? '160px' : '360px',
+            height: 'auto', maxHeight: isMobile ? '45vh' : '65vh',
             objectFit: 'contain', objectPosition: 'right bottom',
             opacity: 0.95, zIndex: 2
           }}
         />
 
-        {/* ============ MOSQUE (MOVED UP) ============ */}
+        {/* ============ MOSQUE (MOVED UP FOR MOBILE) ============ */}
         <img 
           src="/mosque.png" 
           alt=""
           style={{
-            position: 'absolute', bottom: isMobile ? '-2%' : '0', left: '50%',
+            position: 'absolute', bottom: isMobile ? '5%' : '0', left: '50%',
             transform: 'translateX(-50%)',
-            width: isMobile ? '95%' : '110%', maxWidth: isMobile ? '380px' : '650px',
-            height: 'auto', maxHeight: isMobile ? '42vh' : '55vh',
+            width: isMobile ? '90%' : '110%', maxWidth: isMobile ? '350px' : '650px',
+            height: 'auto', maxHeight: isMobile ? '38vh' : '55vh',
             objectFit: 'contain', objectPosition: 'bottom',
             opacity: 0.85, zIndex: 0
           }}
