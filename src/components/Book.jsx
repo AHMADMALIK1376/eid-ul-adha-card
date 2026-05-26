@@ -17,7 +17,7 @@ function Book() {
     const updateSize = () => {
       const w = window.innerWidth;
       if (w < 400) {
-        setBookSize({ width: 270, height: 380 });
+        setBookSize({ width: 240, height: 340 });
       } else if (w < 768) {
         setBookSize({ width: 310, height: 440 });
       } else {
@@ -118,16 +118,22 @@ function Book() {
     <HTMLFlipBook 
       width={bookSize.width} 
       height={bookSize.height}
-      maxShadowOpacity={0.5}
+      maxShadowOpacity={0.3}
       drawShadow={true}
       showCover={true}
       size='fixed'
       mobileScrollSupport={true}
-      flippingTime={800}
+      flippingTime={600}
       usePortrait={false}
       showPageCorners={false}
       disableFlipByClick={false}
-      swipeDistance={20}
+      swipeDistance={30}
+      startZIndex={1}
+      minWidth={bookSize.width}
+      maxWidth={bookSize.width}
+      minHeight={bookSize.height}
+      maxHeight={bookSize.height}
+      autoSize={false}
       style={{ margin: '0 auto' }}
     >
       {/* ============ COVER PAGE ============ */}
