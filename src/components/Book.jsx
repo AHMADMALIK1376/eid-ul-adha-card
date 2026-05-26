@@ -156,11 +156,13 @@ function Book() {
       showCover={true}
       size='fixed'
       mobileScrollSupport={true}
-      flippingTime={600}
+      flippingTime={isMobile ? 400 : 600}
       usePortrait={false}
       showPageCorners={false}
       disableFlipByClick={false}
-      swipeDistance={30}
+      swipeDistance={isMobile ? 15 : 30}
+      clickEventForward={true}
+      useMouseEvents={true}
       style={{ margin: '0 auto' }}
     >
       {/* COVER PAGE */}
