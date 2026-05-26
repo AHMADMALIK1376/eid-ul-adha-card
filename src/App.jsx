@@ -3,7 +3,6 @@ import Book from './components/Book';
 import './App.css';
 
 function App() {
-
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -19,7 +18,8 @@ function App() {
       <div style={{
         position: 'fixed', top: 0, left: 0,
         width: '100vw', height: '100vh',
-        background: '#0D1B2A', zIndex: 0, overflow: 'hidden'
+        background: '#0D1B2A', zIndex: 0, overflow: 'hidden',
+        pointerEvents: 'none' // Crucial: lets clicks pass through background decor to the book
       }}>
         
         {/* Stars */}
@@ -60,7 +60,7 @@ function App() {
           </>
         )}
 
-        {/* ============ CHILD WITH SHEEP - LEFT (MOVED UP FOR MOBILE) ============ */}
+        {/* ============ CHILD WITH SHEEP ============ */}
         <img 
           src="/child-with-sheep.png" 
           alt=""
@@ -73,7 +73,7 @@ function App() {
           }}
         />
 
-        {/* ============ CHILD WITH COW - RIGHT (MOVED UP FOR MOBILE) ============ */}
+        {/* ============ CHILD WITH COW ============ */}
         <img 
           src="/child-with-cow.png" 
           alt=""
@@ -86,7 +86,7 @@ function App() {
           }}
         />
 
-        {/* ============ MOSQUE (MOVED UP FOR MOBILE) ============ */}
+        {/* ============ MOSQUE ============ */}
         <img 
           src="/mosque.png" 
           alt=""
@@ -114,9 +114,14 @@ function App() {
         position: 'fixed', top: 0, left: 0,
         width: '100vw', height: '100vh',
         display: 'flex', justifyContent: 'center', alignItems: 'center',
-        zIndex: 1, pointerEvents: 'auto', padding: '8px'
+        zIndex: 10, // Higher z-index to put book explicitly on top
+        pointerEvents: 'none', // Allows clicking through wrapper
+        padding: isMobile ? '12px' : '24px'
       }}>
-        <Book />
+        {/* Wrapper to restore pointer events just for the book */}
+        <div style={{ pointerEvents: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+          <Book />
+        </div>
       </div>
     </>
   );
