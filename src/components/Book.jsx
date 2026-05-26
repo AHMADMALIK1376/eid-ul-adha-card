@@ -12,15 +12,19 @@ import eidiGiftIcon from '../assets/eidi-gift.png';
 function Book() {
 
   const [bookSize, setBookSize] = useState({ width: 340, height: 480 });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const updateSize = () => {
       const w = window.innerWidth;
       if (w < 400) {
-        setBookSize({ width: 240, height: 340 });
+        setIsMobile(true);
+        setBookSize({ width: 220, height: 310 });
       } else if (w < 768) {
+        setIsMobile(false);
         setBookSize({ width: 310, height: 440 });
       } else {
+        setIsMobile(false);
         setBookSize({ width: 370, height: 520 });
       }
     };
@@ -28,6 +32,34 @@ function Book() {
     window.addEventListener('resize', updateSize);
     return () => window.removeEventListener('resize', updateSize);
   }, []);
+
+  const fs = isMobile ? {
+    coverArabic: '16px',
+    coverTitle: '20px',
+    title: '14px',
+    subtitle: '13px',
+    message: '12px',
+    translation: '10px',
+    icon: '50px',
+    padding: '14px 12px',
+    coverPadding: '16px',
+    moonSize: '70px',
+    mosqueIconSize: '45px',
+    dividerWidth: '140px',
+  } : {
+    coverArabic: '24px',
+    coverTitle: '28px',
+    title: '18px',
+    subtitle: '16px',
+    message: '15px',
+    translation: '12px',
+    icon: '68px',
+    padding: '24px 18px',
+    coverPadding: '24px',
+    moonSize: '100px',
+    mosqueIconSize: '65px',
+    dividerWidth: '200px',
+  };
 
   const eidPages = [
     {
@@ -53,13 +85,13 @@ function Book() {
       title: "EID PRAYER",
       subtitle: "عید کی نماز",
       icon: eidPrayerIcon,
-      message: "Eid ul-Adha prayer will be held at the main mosque at 8:00 AM sharp. Please arrive early with wudu. Bring your prayer mat. Takbeerat will begin 30 minutes before prayer. Let's pray together as one Ummah!"
+      message: "Eid ul-Adha prayer will be held at the main mosque at 8:00 AM sharp. Please arrive early with wudu. Bring your prayer mat. Takbeerat will begin 30 minutes before prayer."
     },
     {
       title: "BLESSINGS OF EID",
       subtitle: "عید کی برکتیں",
       icon: blessingIcon,
-      message: "May the magic of this Eid bring lots of happiness and fill your life with wonderful moments. Enjoy this special day with your loved ones and cherish every moment."
+      message: "May the magic of this Eid bring lots of happiness and fill your life with wonderful moments. Enjoy this special day with your loved ones."
     },
     {
       title: "FAMILY WISHES",
@@ -77,12 +109,13 @@ function Book() {
      title: "DONT FORGET EIDI",
       subtitle: "میری عیدی",
       icon: eidiGiftIcon,
-      message: "This is my EasyPaisa: 0332-5775570 you can send me online Eidi or just give me by hand. May Allah bless you abundantly. Eid Mubarak! 💚"
+      message: "EasyPaisa: 0332-5775570. Send me online Eidi or give me by hand. May Allah bless you abundantly. Eid Mubarak! 💚"
     }
   ];
 
   const getIcon = (index) => {
-    const iconStyle = { width: '68px', height: '68px', objectFit: 'contain' };
+    const iconSize = isMobile ? '50px' : '68px';
+    const iconStyle = { width: iconSize, height: iconSize, objectFit: 'contain' };
     const icons = [
       <img key="hug" src={hugIcon} alt="" style={iconStyle} />,
       <img key="sacrifice" src={sacrificeIcon} alt="" style={iconStyle} />,
@@ -128,40 +161,33 @@ function Book() {
       showPageCorners={false}
       disableFlipByClick={false}
       swipeDistance={30}
-      startZIndex={1}
-      minWidth={bookSize.width}
-      maxWidth={bookSize.width}
-      minHeight={bookSize.height}
-      maxHeight={bookSize.height}
-      autoSize={false}
       style={{ margin: '0 auto' }}
     >
       {/* ============ COVER PAGE ============ */}
       <div style={{ background: 'transparent' }}>
         <div style={{ 
           width: '100%', height: '100%', display: 'flex', flexDirection: 'column', 
-          alignItems: 'center', justifyContent: 'center', padding: '24px',
-          background: '#1A1A2E',
-          border: '3px solid #16213E', position: 'relative', overflow: 'hidden',
-          boxSizing: 'border-box'
+          alignItems: 'center', justifyContent: 'center', padding: fs.coverPadding,
+          background: '#1A1A2E', border: '3px solid #16213E',
+          position: 'relative', overflow: 'hidden', boxSizing: 'border-box'
         }}>
           <GoldCornerLines />
-          {[...Array(12)].map((_, i) => (
+          {[...Array(isMobile ? 6 : 12)].map((_, i) => (
             <span key={i} style={{ position: 'absolute', top: `${Math.random() * 85}%`, left: `${Math.random() * 85}%`, fontSize: `${6 + Math.random() * 12}px`, color: '#FFD700', opacity: 0.3 + Math.random() * 0.5 }}>✦</span>
           ))}
-          <svg width="100" height="100" viewBox="0 0 80 80" style={{ marginBottom: '18px', position: 'relative', zIndex: 1 }}>
+          <svg width={fs.moonSize} height={fs.moonSize} viewBox="0 0 80 80" style={{ marginBottom: isMobile ? '10px' : '18px', position: 'relative', zIndex: 1 }}>
             <circle cx="40" cy="40" r="36" fill="#FFD700" stroke="#E8B800" strokeWidth="3"/>
             <circle cx="52" cy="30" r="30" fill="#1A1A2E"/>
           </svg>
-          <p style={{ fontSize: '24px', fontWeight: '700', color: '#FFD700', marginBottom: '8px', textAlign: 'center', direction: 'rtl', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '2px', position: 'relative', zIndex: 1 }}>عید الاضحیٰ مبارک</p>
-          <h1 style={{ fontSize: '28px', fontWeight: '800', textAlign: 'center', marginBottom: '14px', color: '#FFD700', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", lineHeight: '1.3', letterSpacing: '3px', textShadow: '2px 2px 0px #16213E', position: 'relative', zIndex: 1 }}>EID UL-ADHA<br/>MUBARAK</h1>
-          <svg width="200" height="8" style={{ margin: '8px 0', position: 'relative', zIndex: 1 }}><line x1="0" y1="4" x2="80" y2="4" stroke="#FFD700" strokeWidth="1.5"/><circle cx="100" cy="4" r="3" fill="#FFD700"/><line x1="120" y1="4" x2="200" y2="4" stroke="#FFD700" strokeWidth="1.5"/></svg>
+          <p style={{ fontSize: fs.coverArabic, fontWeight: '700', color: '#FFD700', marginBottom: '6px', textAlign: 'center', direction: 'rtl', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '2px', position: 'relative', zIndex: 1 }}>عید الاضحیٰ مبارک</p>
+          <h1 style={{ fontSize: fs.coverTitle, fontWeight: '800', textAlign: 'center', marginBottom: isMobile ? '8px' : '14px', color: '#FFD700', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", lineHeight: '1.3', letterSpacing: '3px', textShadow: '2px 2px 0px #16213E', position: 'relative', zIndex: 1 }}>EID UL-ADHA<br/>MUBARAK</h1>
+          <svg width={fs.dividerWidth} height="8" style={{ margin: '6px 0', position: 'relative', zIndex: 1 }}><line x1="0" y1="4" x2={isMobile ? "50" : "80"} y2="4" stroke="#FFD700" strokeWidth="1.5"/><circle cx={isMobile ? "70" : "100"} cy="4" r="3" fill="#FFD700"/><line x1={isMobile ? "90" : "120"} y1="4" x2={isMobile ? "140" : "200"} y2="4" stroke="#FFD700" strokeWidth="1.5"/></svg>
           
           <img 
             src="/mosque-icon.png" 
             alt=""
             style={{ 
-              width: '65px', height: '65px', marginTop: '12px', 
+              width: fs.mosqueIconSize, height: fs.mosqueIconSize, marginTop: '8px', 
               position: 'relative', zIndex: 2, objectFit: 'contain',
               filter: 'drop-shadow(0 0 6px rgba(255,215,0,0.4)) brightness(1.3)'
             }} 
@@ -169,25 +195,25 @@ function Book() {
         </div>
       </div>
 
-      {/* ============ INNER PAGES (8) ============ */}
+      {/* ============ INNER PAGES ============ */}
       {eidPages.map((page, index) => (
         <div key={index} style={{ background: 'transparent' }}>
           <div style={{ 
             width: '100%', height: '100%', display: 'flex', flexDirection: 'column', 
-            alignItems: 'center', justifyContent: 'center', padding: '24px 18px',
+            alignItems: 'center', justifyContent: 'center', padding: fs.padding,
             background: '#FFFFFF', border: '3px solid #1A1A2E',
             position: 'relative', boxSizing: 'border-box'
           }}>
             <CornerLines />
-            <div style={{ marginBottom: '10px' }}>{getIcon(index)}</div>
-            <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#1A1A2E', marginBottom: '4px', textAlign: 'center', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '4px' }}>{page.title}</h2>
-            <p style={{ fontSize: '16px', color: '#555', marginBottom: '10px', textAlign: 'center', fontFamily: 'serif' }}>{page.subtitle}</p>
-            <svg width="100" height="2" style={{ margin: '4px 0 8px' }}><line x1="0" y1="1" x2="38" y2="1" stroke="#1A1A2E" strokeWidth="1.5"/><circle cx="50" cy="1" r="2" fill="#1A1A2E"/><line x1="62" y1="1" x2="100" y2="1" stroke="#1A1A2E" strokeWidth="1.5"/></svg>
-            <p style={{ fontSize: '15px', color: '#333', textAlign: 'center', lineHeight: '1.8', padding: '0 6px', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '0.5px' }}>{page.message}</p>
-            <div style={{ minHeight: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ marginBottom: isMobile ? '6px' : '10px' }}>{getIcon(index)}</div>
+            <h2 style={{ fontSize: fs.title, fontWeight: '700', color: '#1A1A2E', marginBottom: '3px', textAlign: 'center', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '4px' }}>{page.title}</h2>
+            <p style={{ fontSize: fs.subtitle, color: '#555', marginBottom: isMobile ? '6px' : '10px', textAlign: 'center', fontFamily: 'serif' }}>{page.subtitle}</p>
+            <svg width={isMobile ? "70" : "100"} height="2" style={{ margin: '3px 0 6px' }}><line x1="0" y1="1" x2={isMobile ? "25" : "38"} y2="1" stroke="#1A1A2E" strokeWidth="1.5"/><circle cx={isMobile ? "35" : "50"} cy="1" r="2" fill="#1A1A2E"/><line x1={isMobile ? "45" : "62"} y1="1" x2={isMobile ? "70" : "100"} y2="1" stroke="#1A1A2E" strokeWidth="1.5"/></svg>
+            <p style={{ fontSize: fs.message, color: '#333', textAlign: 'center', lineHeight: '1.7', padding: '0 4px', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '0.5px' }}>{page.message}</p>
+            <div style={{ minHeight: isMobile ? '24px' : '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {page.translation ? (
-                <p style={{ fontSize: '12px', color: '#666', textAlign: 'center', marginTop: '6px', fontStyle: 'italic', lineHeight: '1.5', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif" }}>{page.translation}</p>
-              ) : (<div style={{ height: '6px' }}></div>)}
+                <p style={{ fontSize: fs.translation, color: '#666', textAlign: 'center', marginTop: '4px', fontStyle: 'italic', lineHeight: '1.4', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif" }}>{page.translation}</p>
+              ) : (<div style={{ height: '4px' }}></div>)}
             </div>
           </div>
         </div>
@@ -195,16 +221,16 @@ function Book() {
 
       {/* ============ BACK COVER ============ */}
       <div style={{ background: 'transparent' }}>
-        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#1A1A2E', border: '3px solid #16213E', boxSizing: 'border-box', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: fs.coverPadding, background: '#1A1A2E', border: '3px solid #16213E', boxSizing: 'border-box', position: 'relative', overflow: 'hidden' }}>
           <GoldCornerLines />
-          {[...Array(8)].map((_, i) => (<span key={i} style={{ position: 'absolute', top: `${Math.random() * 85}%`, left: `${Math.random() * 85}%`, fontSize: `${8 + Math.random() * 10}px`, color: '#FFD700', opacity: 0.3 }}>✦</span>))}
-          <svg width="40" height="36" viewBox="0 0 36 32"><path d="M18 30 C18 30, 2 20, 2 12 C2 7, 6 3, 10 3 C13 3, 16 5.5, 18 8 C20 5.5, 23 3, 26 3 C30 3, 34 7, 34 12 C34 20, 18 30, 18 30Z" fill="#FF6B6B" stroke="#E05555" strokeWidth="2"/></svg>
-          <p style={{ fontSize: '20px', color: '#FFD700', fontWeight: '700', marginTop: '18px', marginBottom: '10px', textAlign: 'center', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '3px' }}>WITH LOVE & DUA</p>
-          <svg width="160" height="4" style={{ margin: '12px 0' }}><line x1="0" y1="2" x2="62" y2="2" stroke="#FFD700" strokeWidth="1.5"/><circle cx="80" cy="2" r="2" fill="#FFD700"/><line x1="98" y1="2" x2="160" y2="2" stroke="#FFD700" strokeWidth="1.5"/></svg>
-          <p style={{ color: '#E8D5A0', fontSize: '15px', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", textAlign: 'center', lineHeight: '1.6' }}>May this Eid bring you peace,<br/>prosperity, and countless blessings.<br/>Ameen!</p>
-          <svg width="160" height="4" style={{ margin: '12px 0' }}><line x1="0" y1="2" x2="62" y2="2" stroke="#FFD700" strokeWidth="1.5"/><circle cx="80" cy="2" r="2" fill="#FFD700"/><line x1="98" y1="2" x2="160" y2="2" stroke="#FFD700" strokeWidth="1.5"/></svg>
-          <p style={{ color: '#B0B0C0', fontSize: '12px', marginTop: '10px', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '3px' }}>FROM</p>
-          <p style={{ color: '#FFD700', fontSize: '18px', fontWeight: '700', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '3px' }}>[M.Ahmad Malik]</p>
+          {[...Array(isMobile ? 4 : 8)].map((_, i) => (<span key={i} style={{ position: 'absolute', top: `${Math.random() * 85}%`, left: `${Math.random() * 85}%`, fontSize: `${8 + Math.random() * 10}px`, color: '#FFD700', opacity: 0.3 }}>✦</span>))}
+          <svg width={isMobile ? "30" : "40"} height={isMobile ? "28" : "36"} viewBox="0 0 36 32"><path d="M18 30 C18 30, 2 20, 2 12 C2 7, 6 3, 10 3 C13 3, 16 5.5, 18 8 C20 5.5, 23 3, 26 3 C30 3, 34 7, 34 12 C34 20, 18 30, 18 30Z" fill="#FF6B6B" stroke="#E05555" strokeWidth="2"/></svg>
+          <p style={{ fontSize: fs.coverTitle, color: '#FFD700', fontWeight: '700', marginTop: isMobile ? '12px' : '18px', marginBottom: isMobile ? '6px' : '10px', textAlign: 'center', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '3px' }}>WITH LOVE & DUA</p>
+          <svg width={isMobile ? "120" : "160"} height="4" style={{ margin: '8px 0' }}><line x1="0" y1="2" x2={isMobile ? "45" : "62"} y2="2" stroke="#FFD700" strokeWidth="1.5"/><circle cx={isMobile ? "60" : "80"} cy="2" r="2" fill="#FFD700"/><line x1={isMobile ? "75" : "98"} y1="2" x2={isMobile ? "120" : "160"} y2="2" stroke="#FFD700" strokeWidth="1.5"/></svg>
+          <p style={{ color: '#E8D5A0', fontSize: fs.message, fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", textAlign: 'center', lineHeight: '1.6' }}>May this Eid bring you peace,<br/>prosperity, and countless blessings.<br/>Ameen!</p>
+          <svg width={isMobile ? "120" : "160"} height="4" style={{ margin: '8px 0' }}><line x1="0" y1="2" x2={isMobile ? "45" : "62"} y2="2" stroke="#FFD700" strokeWidth="1.5"/><circle cx={isMobile ? "60" : "80"} cy="2" r="2" fill="#FFD700"/><line x1={isMobile ? "75" : "98"} y1="2" x2={isMobile ? "120" : "160"} y2="2" stroke="#FFD700" strokeWidth="1.5"/></svg>
+          <p style={{ color: '#B0B0C0', fontSize: fs.translation, marginTop: '6px', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '3px' }}>FROM</p>
+          <p style={{ color: '#FFD700', fontSize: fs.title, fontWeight: '700', fontFamily: "'Agency FB', 'Arial Narrow', sans-serif", letterSpacing: '3px' }}>[M.Ahmad Malik]</p>
         </div>
       </div>
       
